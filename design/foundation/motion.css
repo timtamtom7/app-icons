@@ -1,0 +1,180 @@
+/* ============================================
+   MOTION — Animation Tokens & Reusable Rules
+   ============================================ */
+
+/* ── Easing Curves ────────────────────── */
+:root {
+  /* Recommended: use these token names in all animations */
+  --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);     /* Most UI: fast start, gentle end */
+  --ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);   /* Symmetric: opens and closes */
+  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1); /* Spring overshoot: playful pop */
+  --ease-sharp:     cubic-bezier(0.4, 0, 0.6, 1);     /* Snappy: immediate response */
+
+  /* Duration scale */
+  --duration-instant:  50ms;
+  --duration-fast:     100ms;   /* Micro-interactions: hover, press */
+  --duration-normal:   150ms;   /* UI state changes: toggles, selections */
+  --duration-slow:     250ms;   /* Entrance/exit: modals, panels */
+  --duration-page:     300ms;   /* Page transitions */
+  --duration-reveal:   400ms;   /* Content reveals, staggered lists */
+}
+
+/* ── Hover / Press ────────────────────── */
+.hover-lift {
+  transition: transform var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out);
+}
+.hover-lift:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.hover-lift:active {
+  transform: translateY(0) scale(0.99);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Opacity Transitions ──────────────── */
+.fade-in {
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+.fade-in:hover {
+  opacity: 0.85;
+}
+
+/* ── Button Press ─────────────────────── */
+.btn-press {
+  transition: transform var(--duration-fast) var(--ease-out),
+              background var(--duration-fast) var(--ease-out);
+}
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* ── Border Transitions ───────────────── */
+.border-glow {
+  transition: border-color var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out);
+}
+.border-glow:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-subtle);
+}
+
+/* ── Underline Link ───────────────────── */
+.link-underline {
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+.link-underline:hover {
+  opacity: 0.7;
+}
+
+/* ── Staggered List Entrance ──────────── */
+/*
+  Parent: add class "animate-in"
+  Children: add data-delay="0", data-delay="1", etc.
+  CSS will handle the stagger via animation-delay
+*/
+.animate-in > * {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: slideUpFade var(--duration-reveal) var(--ease-out) forwards;
+}
+
+.animate-in > *:nth-child(1)  { animation-delay: 0ms; }
+.animate-in > *:nth-child(2)  { animation-delay: 60ms; }
+.animate-in > *:nth-child(3)  { animation-delay: 120ms; }
+.animate-in > *:nth-child(4)  { animation-delay: 180ms; }
+.animate-in > *:nth-child(5)  { animation-delay: 240ms; }
+.animate-in > *:nth-child(6)  { animation-delay: 300ms; }
+.animate-in > *:nth-child(7)  { animation-delay: 360ms; }
+.animate-in > *:nth-child(8)  { animation-delay: 420ms; }
+
+/* ── Page / View Transitions ──────────── */
+/*
+  Use with React Router or a page transition component.
+  Slide in from right (desktop), slide from bottom (mobile).
+*/
+.page-enter {
+  opacity: 0;
+  transform: translateX(20px);
+  animation: pageIn var(--duration-page) var(--ease-out) forwards;
+}
+
+@keyframes slideUpFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pageIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ── Modal / Sheet Animation ─────────── */
+.modal-enter {
+  opacity: 0;
+  transform: scale(0.96) translateY(8px);
+  animation: modalIn var(--duration-slow) var(--ease-spring) forwards;
+}
+
+.modal-exit {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  animation: modalOut var(--duration-normal) var(--ease-in-out) forwards;
+}
+
+.overlay-enter {
+  opacity: 0;
+  animation: overlayIn var(--duration-normal) var(--ease-out) forwards;
+}
+
+@keyframes modalIn {
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modalOut {
+  to {
+    opacity: 0;
+    transform: scale(0.97) translateY(4px);
+  }
+}
+
+@keyframes overlayIn {
+  to { opacity: 1; }
+}
+
+/* ── Skeleton Loading ─────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-3) 0%,
+    var(--surface-4) 50%,
+    var(--surface-3) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ── Respect Reduced Motion ───────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:      0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration:      0.01ms !important;
+  }
+}

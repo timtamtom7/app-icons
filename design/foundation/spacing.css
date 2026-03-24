@@ -1,0 +1,120 @@
+/* ============================================
+   SPACING — 4px Grid System
+   Base unit: 4px
+   Every spacing value must be a multiple of 4.
+   ============================================ */
+
+:root {
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+  --space-32:  128px;
+
+  /* Semantic spacing tokens */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+
+  /* Component-specific */
+  --card-padding:       20px;
+  --card-padding-sm:    16px;
+  --card-padding-lg:    24px;
+  --input-padding-x:     12px;
+  --input-padding-y:     10px;
+  --button-padding-x:    16px;
+  --button-padding-y:    10px;
+  --nav-height:          56px;
+  --sidebar-width:       240px;
+  --modal-padding:        24px;
+
+  /* Section spacing */
+  --section-gap:         80px;
+  --section-gap-sm:      48px;
+  --section-gap-lg:      128px;
+}
+
+/* ── Layout Containers ─────────────────── */
+.container {
+  width:      100%;
+  max-width:  1200px;
+  margin-left:  auto;
+  margin-right: auto;
+  padding-left:  var(--space-6);
+  padding-right: var(--space-6);
+}
+
+.container-sm {
+  max-width:  720px;
+  padding-left:  var(--space-4);
+  padding-right: var(--space-4);
+}
+
+.container-xs {
+  max-width:  480px;
+  padding-left:  var(--space-4);
+  padding-right: var(--space-4);
+}
+
+/* ── Flex Utilities ───────────────────── */
+.flex          { display: flex; }
+.flex-col      { display: flex; flex-direction: column; }
+.items-center  { align-items: center; }
+.items-start   { align-items: flex-start; }
+.items-end     { align-items: flex-end; }
+.justify-center  { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-end     { justify-content: flex-end; }
+.gap-1  { gap: var(--space-1); }
+.gap-2  { gap: var(--space-2); }
+.gap-3  { gap: var(--space-3); }
+.gap-4  { gap: var(--space-4); }
+.gap-6  { gap: var(--space-6); }
+.gap-8  { gap: var(--space-8); }
+
+/* ── Grid Utilities ───────────────────── */
+.grid { display: grid; }
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* ── Responsive Spacing ───────────────── */
+@media (max-width: 768px) {
+  :root {
+    --section-gap:  var(--space-12);
+    --section-gap-sm: var(--space-8);
+    --card-padding:  var(--card-padding-sm);
+    --nav-height:    52px;
+  }
+
+  .container {
+    padding-left:  var(--space-4);
+    padding-right: var(--space-4);
+  }
+
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: 1fr;
+  }
+}
